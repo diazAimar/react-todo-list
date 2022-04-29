@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
-
+import React, { useContext, useState } from 'react';
+import TodoContext from '../../context/TodoContext';
 export default function TodoForm() {
   const [text, setText] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState('');
-
+  const { todos, addTodo } = useContext(TodoContext);
+  const [id, setId] = useState(0);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e.currentTarget);
+    if (!btnDisabled) {
+      const newTodo = {
+        id: id,
+        text: text,
+      };
+      addTodo([newTodo, ...todos]);
+      setText('');
+      setId(id + 1);
+      setBtnDisabled(true);
+    } else {
+      setMessage('Task must have at least 4 characters');
+    }
   };
 
   const handleTextChange = (e) => {
@@ -15,7 +27,7 @@ export default function TodoForm() {
     if (task === '') {
       setBtnDisabled(true);
       setMessage('');
-    } else if (task !== '' && task.length < 4) {
+    } else if (task !== '' && task.trim().length < 4) {
       setBtnDisabled(true);
       setMessage('Task must have at least 4 characters');
     } else {
@@ -40,13 +52,14 @@ export default function TodoForm() {
             onChange={handleTextChange}
             id="newTodo"
             name="newTodo"
+            value={text}
             placeholder="Type Here (e.g. 'Study Math')"
             className="input input-bordered w-full max-w-xs"
           />
         </div>
 
         {!btnDisabled ? (
-          <button type="submit" className="ml-10 mt-auto btn h-full align-bottom">
+          <button type="submit" className="ml-10 mt-auto btn h-full align-bottom ">
             Add Task
           </button>
         ) : (
