@@ -6,6 +6,7 @@ export default function TodoForm() {
   const [message, setMessage] = useState('');
   const { todos, addTodo } = useContext(TodoContext);
   const [id, setId] = useState(0);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!btnDisabled) {
@@ -13,7 +14,7 @@ export default function TodoForm() {
         id: id,
         text: text,
       };
-      addTodo([newTodo, ...todos]);
+      addTodo(newTodo);
       setText('');
       setId(id + 1);
       setBtnDisabled(true);
@@ -40,7 +41,7 @@ export default function TodoForm() {
   return (
     <>
       <form
-        className="flex w-full lg:w-5/6 xl:w-8/12 2xl:w-9-12 todo-list mx-auto lg:px-14 mt-14 birder"
+        className="flex flex-col sm:flex-row w-full lg:w-5/6 xl:w-8/12 2xl:w-9-12 todo-list mx-auto lg:px-14 mt-14 p-5 "
         onSubmit={handleSubmit}
       >
         <div className="form-control w-full max-w-xs">
@@ -50,8 +51,6 @@ export default function TodoForm() {
           <input
             type="text"
             onChange={handleTextChange}
-            id="newTodo"
-            name="newTodo"
             value={text}
             placeholder="Type Here (e.g. 'Study Math')"
             className="input input-bordered w-full max-w-xs"
@@ -59,11 +58,14 @@ export default function TodoForm() {
         </div>
 
         {!btnDisabled ? (
-          <button type="submit" className="ml-10 mt-auto btn h-full align-bottom ">
+          <button
+            type="submit"
+            className="mt-5 btn w-1/4 sm:w-auto sm:mt-auto sm:ml-10 align-bottom "
+          >
             Add Task
           </button>
         ) : (
-          <div className="ml-10 mt-auto message h-full align-bottom">
+          <div className="mt-5 sm:mt-auto ml-10 message h-full align-bottom">
             <p>{message}</p>
           </div>
         )}

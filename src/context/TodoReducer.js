@@ -5,6 +5,12 @@ const todoReducer = (state, action) => {
         ...state,
         todos: action.payload,
       };
+    case 'FINISH_TODO':
+      return {
+        ...state,
+        // todos: action.payload.todos,
+        finishedTodos: action.payload,
+      };
     default:
       return state;
   }
