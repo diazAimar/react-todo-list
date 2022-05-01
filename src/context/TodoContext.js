@@ -1,3 +1,4 @@
+import { type } from '@testing-library/user-event/dist/type';
 import { createContext, useContext, useReducer } from 'react';
 import todoReducer from './TodoReducer';
 
@@ -10,6 +11,7 @@ export const TodoProvider = ({ children }) => {
     finishedTodos: [],
     unfinishedTodos: [],
   };
+
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
   const addTodo = (newTodo) => {
@@ -28,6 +30,17 @@ export const TodoProvider = ({ children }) => {
       dispatch({
         type: 'FINISH_TODO',
         payload: [finishedTodo, ...state.finishedTodos],
+      });
+      let arrRemovedFinishedTodo = [];
+      state.todos.forEach((actTodo) => {
+        if (actTodo.id !== finishedTodo.id) {
+          arrRemovedFinishedTodo.push(actTodo);
+        }
+      });
+      console.log(arrRemovedFinishedTodo);
+      dispatch({
+        type: 'DELETE_TODO',
+        payload: arrRemovedFinishedTodo,
       });
     }
   };

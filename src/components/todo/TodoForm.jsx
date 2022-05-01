@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import TodoContext from '../../context/TodoContext';
+
 export default function TodoForm() {
   const [text, setText] = useState('');
   const [btnDisabled, setBtnDisabled] = useState(true);
@@ -11,9 +13,9 @@ export default function TodoForm() {
     e.preventDefault();
     if (!btnDisabled) {
       const newTodo = {
-        id: id,
         text: text,
       };
+      newTodo.id = uuidv4();
       addTodo(newTodo);
       setText('');
       setId(id + 1);
