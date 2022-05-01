@@ -3,7 +3,7 @@ import TodoContext from '../../context/TodoContext';
 import { useContext } from 'react';
 
 export default function TodoItem({ todo }) {
-  const { finishTodo } = useContext(TodoContext);
+  const { finishTodo, deleteTodo } = useContext(TodoContext);
   return (
     <div className="flex justify-between items-center text-xl my-2">
       <div className="py-2 mr-6">
@@ -15,7 +15,7 @@ export default function TodoItem({ todo }) {
         <button className="icon" onClick={() => finishTodo(todo)}>
           <FaCheck color="#1f2937" />
         </button>
-        <button className="icon">
+        <button className="icon" onClick={() => deleteTodo(todo)}>
           <FaTimes color="#1f2937" />
         </button>
         <button className="icon">

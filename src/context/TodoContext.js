@@ -37,12 +37,25 @@ export const TodoProvider = ({ children }) => {
           arrRemovedFinishedTodo.push(actTodo);
         }
       });
-      console.log(arrRemovedFinishedTodo);
+      // console.log(arrRemovedFinishedTodo);
       dispatch({
         type: 'DELETE_TODO',
         payload: arrRemovedFinishedTodo,
       });
     }
+  };
+
+  const deleteTodo = (todo) => {
+    let arrRemovedFinishedTodo = [];
+    state.todos.forEach((actTodo) => {
+      if (actTodo.id !== todo.id) {
+        arrRemovedFinishedTodo.push(actTodo);
+      }
+    });
+    dispatch({
+      type: 'DELETE_TODO',
+      payload: arrRemovedFinishedTodo,
+    });
   };
 
   return (
@@ -53,6 +66,7 @@ export const TodoProvider = ({ children }) => {
         unfinishedTodos: state.unfinishedTodos,
         finishTodo,
         addTodo,
+        deleteTodo,
       }}
     >
       {children}
