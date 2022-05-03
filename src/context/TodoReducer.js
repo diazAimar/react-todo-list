@@ -16,6 +16,11 @@ const todoReducer = (state, action) => {
         ...state,
         todos: action.payload,
       };
+    case 'SET_UNFINISHED_TODOS':
+      return {
+        ...state,
+        unfinishedTodos: action.payload,
+      };
     default:
       return state;
   }

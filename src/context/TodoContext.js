@@ -46,16 +46,23 @@ export const TodoProvider = ({ children }) => {
   };
 
   const deleteTodo = (todo) => {
-    let arrRemovedFinishedTodo = [];
+    let arrRemovedFinishedTodo = [],
+      arrUnfinishedTodos = [];
     state.todos.forEach((actTodo) => {
       if (actTodo.id !== todo.id) {
         arrRemovedFinishedTodo.push(actTodo);
-      }
+      } else arrUnfinishedTodos.push(actTodo);
     });
     dispatch({
       type: 'DELETE_TODO',
       payload: arrRemovedFinishedTodo,
     });
+    dispatch({
+      type: 'SET_UNFINISHED_TODOS',
+      payload: [todo, ...state.unfinishedTodos],
+    });
+    /*     console.log('unf: ' + arrUnfinishedTodos);
+    console.log('del: ' + arrRemovedFinishedTodo); */
   };
 
   return (
